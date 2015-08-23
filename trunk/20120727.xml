@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<Module>
+  <ModulePrefs title="hello world example" /> 
+  <Content type="html">
+     <![CDATA[ 
+
+<script type="text/javascript">
+var clientId = '868823186065-m7cf3rf2rmk44s2cq5au85if6he8s73e.apps.googleusercontent.com';
+var apiKey = 'AIzaSyA5Xe9zRpKQhbSRQSbVvbtf60NPmVgdi90';
+var scopes = 'https://www.googleapis.com/auth/calendar';
+
+function handleClientLoad() {
+  alert("test1");
+  gapi.client.setApiKey(apiKey);
+  
+  alert("test2");
+  window.setTimeout(checkAuth, 1);
+}
+
+function checkAuth() {
+  alert("test3");
+  alert(clientId); 
+  gapi.auth.authorize({
+    client_id: clientId, scope: scopes, immediate: true}, handleAuthResult);
+}
+
+function handleAuthResult(authResult) {
+
+  alert("test4");
+  if (authResult) {
+  alert("test4-1");
+    gapi.client.load('calendar', 'v3', handleAuthorized);
+  } else {
+  alert("test4-2");
+    handleUnauthorized();
+  }
+}
+
+function handleAuthorized() {
+
+  var authorizeButton = document.getElementById('authorize-button');
+  var runDemoButton = document.getElementById('run-demo-button');
+
+  authorizeButton.style.visibility = 'hidden';
+  runDemoButton.style.visibility = '';
+  runDemoButton.onclick = makeApiCall;
+  outputToPage('Click the Run Demo button to begin.');
+}
+
+function handleUnauthorized() {
+  var authorizeButton = document.getElementById('authorize-button');
+  var runDemoButton = document.getElementById('run-demo-button');
+
+  runDemoButton.style.visibility = 'hidden';
+  authorizeButton.style.visibility = '';
+  authorizeButton.onclick = handleAuthClick;
+  outputToPage('Please authorize this script to access Google Analytics.');
+}
+
+function handleAuthClick(event) {
+  gapi.auth.authorize({
+    client_id: clientId, scope: scopes, immediate: false}, handleAuthResult);
+  return false;
+}
+function makeApiCall() {
+  gapi.client.calendar.events.get({
+    'calendarId': '6pe94d8fi22ji6adjnknomau8s@group.calendar.google.com',
+    'eventId': 'jqgbr7e2jrpkuaclqll1546ir0'
+  }).execute(handleCoreReportingResults);
+}
+
+function handleCoreReportingResults(results) {
+  if (!results.code) {
+   printReportInfo(results);
+  } else {
+    outputToPage('There was an error: ' + results.message);
+  }
+}
+
+/**
+ * Prints general information about this report.
+ * @param {Object} results The object returned from the API.
+ */
+function printReportInfo(results) {
+	var innerHtml = '<h3>Report Information</h3>' + '<p>';
+	innerHtml += 'summary  = ' + results.summary + '<br>';
+	innerHtml += 'start  = ' + results.start.dateTime + '<br>';
+	innerHtml += 'end  = ' + results.end.dateTime + '<br></p>';
+	document.getElementById('output').innerHTML =innerHtml;
+}
+</script>
+
+<script src="https://apis.google.com/js/client.js?onload=handleClientLoad"></script>
+<button id="authorize-button">Authorize</button>
+<button id="run-demo-button">Run Demo</button>
+<hr>
+
+<div id="output">Loading, one sec....</div>
+
+     ]]>
+  </Content> 
+</Module>

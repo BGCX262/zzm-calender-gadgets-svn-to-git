@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Module>
+  <ModulePrefs title="Zombies!" height="350" />
+  <Content type="html">
+  <![CDATA[
+<div>
+  <h3>I'm on top now!</h3>
+</div>
+<div id="messageBox"></div>
+
+<script type="text/javascript"> 
+  // In the constructor, state that messages should be be displayed
+  // in the messageBox <div> rather than at the top of the gadget.
+  var msg = new gadgets.MiniMessage(__MODULE_ID__, document.getElementById("messageBox"));
+  msg.createDismissibleMessage("I'm the first message.");
+  msg.createDismissibleMessage("I'm the second message.");
+  msg.createDismissibleMessage("I'm at the bottom.");
+
+</script>
+  ]]>
+  </Content>
+</Module>

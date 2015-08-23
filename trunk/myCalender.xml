@@ -1,0 +1,1816 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Module>
+  <ModulePrefs title="MyCalenderTest" height="350">
+    <Require feature="opensocial-0.8" />
+    <Require feature="minimessage" />
+    <Require feature="dynamic-height"/>
+    <Locale messages="https://sateraito-apps-myportal2.appspot.com/lang/ALL_ALL.xml"/>
+  </ModulePrefs>
+  
+  <UserPref name="additional_calendar_name_1" display_name="__MSG_ADDITIONAL_CALENDAR_NAME__1" datatype="string" default_value="" />
+  <UserPref name="additional_calendar_email_1" display_name="__MSG_ADDITIONAL_CALENDAR_EMAIL__1" datatype="string" default_value="" />
+  <UserPref name="additional_calendar_name_2" display_name="__MSG_ADDITIONAL_CALENDAR_NAME__2" datatype="string" default_value="" />
+  <UserPref name="additional_calendar_email_2" display_name="__MSG_ADDITIONAL_CALENDAR_EMAIL__2" datatype="string" default_value="" />
+  <UserPref name="additional_calendar_name_3" display_name="__MSG_ADDITIONAL_CALENDAR_NAME__3" datatype="string" default_value="" />
+  <UserPref name="additional_calendar_email_3" display_name="__MSG_ADDITIONAL_CALENDAR_EMAIL__3" datatype="string" default_value="" />
+  <UserPref name="additional_calendar_name_4" display_name="__MSG_ADDITIONAL_CALENDAR_NAME__4" datatype="string" default_value="" />
+  <UserPref name="additional_calendar_email_4" display_name="__MSG_ADDITIONAL_CALENDAR_EMAIL__4" datatype="string" default_value="" />
+  <UserPref name="additional_calendar_name_5" display_name="__MSG_ADDITIONAL_CALENDAR_NAME__5" datatype="string" default_value="" />
+  <UserPref name="additional_calendar_email_5" display_name="__MSG_ADDITIONAL_CALENDAR_EMAIL__5" datatype="string" default_value="" />
+  <UserPref name="additional_calendar_name_6" display_name="__MSG_ADDITIONAL_CALENDAR_NAME__6" datatype="string" default_value="" />
+  <UserPref name="additional_calendar_email_6" display_name="__MSG_ADDITIONAL_CALENDAR_EMAIL__6" datatype="string" default_value="" />
+  <UserPref name="additional_calendar_name_7" display_name="__MSG_ADDITIONAL_CALENDAR_NAME__7" datatype="string" default_value="" />
+  <UserPref name="additional_calendar_email_7" display_name="__MSG_ADDITIONAL_CALENDAR_EMAIL__7" datatype="string" default_value="" />
+  <UserPref name="additional_calendar_name_8" display_name="__MSG_ADDITIONAL_CALENDAR_NAME__8" datatype="string" default_value="" />
+  <UserPref name="additional_calendar_email_8" display_name="__MSG_ADDITIONAL_CALENDAR_EMAIL__8" datatype="string" default_value="" />
+  <UserPref name="additional_calendar_name_9" display_name="__MSG_ADDITIONAL_CALENDAR_NAME__9" datatype="string" default_value="" />
+  <UserPref name="additional_calendar_email_9" display_name="__MSG_ADDITIONAL_CALENDAR_EMAIL__9" datatype="string" default_value="" />
+  <UserPref name="additional_calendar_name_10" display_name="__MSG_ADDITIONAL_CALENDAR_NAME__10" datatype="string" default_value="" />
+  <UserPref name="additional_calendar_email_10" display_name="__MSG_ADDITIONAL_CALENDAR_EMAIL__10" datatype="string" default_value="" />
+  <UserPref name="gadget_height" display_name="__MSG_GADGET_HEIGHT__" datatype="string" default_value="200" />
+
+  <Content type="html" view="home,canvas,profile">
+    
+    <![CDATA[
+    <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" type="text/css" href="http://zzm-calender-gadgets.googlecode.com/svn/trunk/ext/resources/css/ext-all.css" />
+    <style type="text/css">
+        body {font: small/normal Arial,Sans-serif;}
+        .sateraito {font-size:13px;}
+        table.sateraito {border:solid 2px #BBCCFF; empty-cells:show; border-collapse:collapse; }
+        th {border:solid 1px #BBCCFF}
+        th.sateraito_date_col {text-align:center; border-top:solid 2px #BBCCFF; border-bottom:solid 2px #BBCCFF; border-right:none; border-left:none;}
+        th.header_sunday {background-color:#F9DEDE;}
+        th.header_saturday {background-color:#D0E0F3;}
+        th.header_normalday {background-color:#E3E9FF;}
+        th.header_today {background-color:#FAD163; border-left:solid 1px #FAD163; border-right:solid 1px #FAD163; }
+        th.layout {padding-right:5px; text-decoration:none; text-align:left; font-weight:normal;}
+        td.sateraito_event_col {border:solid 1px #D3D9FF; vertical-align:top;}
+        td.body_today {background-color:#FFF7D7;}
+        .layout {border:none; font-size:13px; vertical-align:top;}
+        span.date_of_week { text-decoration:none; color:blue; }
+        span.all-day-colored {color: darkorange;}
+        span.early-time-colored {color: #0085ce;}
+        span.mid-time-colored {color: green;}
+        span.late-time-colored {color: purple;}
+        span.bulk_create_event {padding-left:10px; cursor:pointer; color:#909090;}
+        span.link_cmd { text-decoration:underline; cursor:pointer; color:blue; }
+        span.accepted {color:blue; font-size:12px; margin-left:10px;}
+        span.invited {color:#909090; font-size:12px; margin-left:10px;}
+        span.declined {color:red; font-size:12px; margin-left:10px;}
+        div.sateraito_event_detail {border:solid 1px #BBCCFF; padding:10px; display:block; position:absolute; width:400px; top:20px; left:0px; z-index:100; background-color: white; cursor:auto;}
+        div.event_name {text-decoration:none; height:100%; word-wrap:break-word;}
+        div.sateraito_event_summary { padding-left:10px; cursor:pointer; }
+        img.btn_close_event_detail {cursor:pointer;}
+        .tablib_content_container {font-size:12px; margin:3px padding:3px}
+        a:visited {color: blue}
+        a:link {color: blue}
+        .x-tab-strip span.x-tab-strip-text {font-size:11px; font-family:Arial, Verdana, sans-serif}
+        div.message {margin:3px; padding:3px;}
+    </style>
+    
+    <script type="text/javascript" src="https://sateraito-apps-myportal2.appspot.com/static/jquery-1.4.4.min.js"></script>
+    <script type="text/javascript" src="https://sateraito-apps-myportal2.appspot.com/static/ext/adapter/jquery/ext-jquery-adapter.js"></script>
+    <script type="text/javascript" src="https://sateraito-apps-myportal2.appspot.com/static/ext/adapter/ext/ext-base.js"></script>
+    <script type="text/javascript" src="https://sateraito-apps-myportal2.appspot.com/static/ext/ext-all.js"></script>
+    <script type="text/javascript" src="https://sateraito-apps-myportal2.appspot.com/static/ext/src/locale/ext-lang-ja.js"></script>
+    <script type="text/javascript">
+    
+    Ext.BLANK_IMAGE_URL = 'https://sateraito-apps-myportal2.appspot.com/static/ext/resources/images/default/s.gif';
+    (
+        function () {
+        
+        /**    
+         * showSettingWindow
+         *    
+         * 追加設定画面を表示する    
+         */
+        Sateraito.GadgetSetting.showSettingWindow = function (){
+            if (!Sateraito.GadgetSetting.settingWindow) {
+                var vHtml = '';
+                vHtml += '<table style="width:100%" class="x-window-bc">';
+                vHtml += '<tr>';
+                vHtml += '<td>';
+                vHtml += '__MSG_CALENDAR_NAME__1';
+                vHtml += '</td>';
+                vHtml += '<td>';
+                vHtml += '<input type="text" name="user_calendar_name_1" size="25">';
+                vHtml += '</td>';
+                vHtml += '</tr>';
+                vHtml += '<tr>';
+                vHtml += '<td>';
+                vHtml += '__MSG_CALENDAR_EMAIL__1';
+                vHtml += '</td>';
+                vHtml += '<td>';
+                vHtml += '<input type="text" name="user_calendar_email_1" size="25">';
+                vHtml += '</td>';
+                vHtml += '</tr>';
+                vHtml += '<tr>';
+                vHtml += '<td>';
+                vHtml += '__MSG_CALENDAR_NAME__2';
+                vHtml += '</td>';
+                vHtml += '<td>';
+                vHtml += '<input type="text" name="user_calendar_name_2" size="25">';
+                vHtml += '</td>';
+                vHtml += '</tr>';
+                vHtml += '<tr>';
+                vHtml += '<td>';
+                vHtml += '__MSG_CALENDAR_EMAIL__2';
+                vHtml += '</td>';
+                vHtml += '<td>';
+                vHtml += '<input type="text" name="user_calendar_email_2" size="25">';
+                vHtml += '</td>';
+                vHtml += '</tr>';
+                vHtml += '<tr>';
+                vHtml += '<td>';
+                vHtml += '__MSG_CALENDAR_NAME__3';
+                vHtml += '</td>';
+                vHtml += '<td>';
+                vHtml += '<input type="text" name="user_calendar_name_3" size="25">';
+                vHtml += '</td>';
+                vHtml += '</tr>';
+                vHtml += '<tr>';
+                vHtml += '<td>';
+                vHtml += '__MSG_CALENDAR_EMAIL__3';
+                vHtml += '</td>';
+                vHtml += '<td>';
+                vHtml += '<input type="text" name="user_calendar_email_3" size="25">';
+                vHtml += '</td>';
+                vHtml += '</tr>';
+                vHtml += '</table>';
+
+                Sateraito.GadgetSetting.settingWindow = new Ext.Window({
+                    width: 330,
+                    height: 170,
+                    layout: 'fit',
+                    title: '__MSG_ADDITIONAL_CALENDAR_SETTING__',
+                    closeAction: 'hide',
+                    plain: true,
+                    items: {
+                        autoScroll: true,
+                        layout: 'fit',
+                        html: vHtml
+                    },
+                    buttons: [{
+                        text: '__MSG_SAVE__',
+                        listeners: {
+                            'click': function () {
+                                var settingObj = {
+                                    'user_calendar_name_1': $('input:text[name=user_calendar_name_1]').val(),
+                                    'user_calendar_email_1': $('input:text[name=user_calendar_email_1]').val(),
+                                    'user_calendar_name_2': $('input:text[name=user_calendar_name_2]').val(),
+                                    'user_calendar_email_2': $('input:text[name=user_calendar_email_2]').val(),
+                                    'user_calendar_name_3': $('input:text[name=user_calendar_name_3]').val(),
+                                    'user_calendar_email_3': $('input:text[name=user_calendar_email_3]').val()
+                                };
+                                Sateraito.GadgetSetting.requestSetGadgetSetting(settingObj, function () {
+                                    // ガジェットをリロード
+                                    window.location.reload();
+                                });
+
+                            }
+
+                        }
+
+                    }, {
+                        text: '__MSG_CANCEL__',
+                        handler: function () {
+                            Sateraito.GadgetSetting.settingWindow.hide();
+                        }
+                    }]
+                });
+            }
+
+            Sateraito.GadgetSetting.settingWindow.show(this);
+
+            $('input:text[name=user_calendar_name_1]').val(Sateraito.GadgetSetting.settingObj.user_calendar_name_1);
+            $('input:text[name=user_calendar_email_1]').val(Sateraito.GadgetSetting.settingObj.user_calendar_email_1);
+            $('input:text[name=user_calendar_name_2]').val(Sateraito.GadgetSetting.settingObj.user_calendar_name_2);
+            $('input:text[name=user_calendar_email_2]').val(Sateraito.GadgetSetting.settingObj.user_calendar_email_2);
+            $('input:text[name=user_calendar_name_3]').val(Sateraito.GadgetSetting.settingObj.user_calendar_name_3);
+            $('input:text[name=user_calendar_email_3]').val(Sateraito.GadgetSetting.settingObj.user_calendar_email_3);
+        };
+
+        AppsUser = {
+            userListLoadingStatus: 0, // 0=ロード前 1=ロード中 2=ロード完了
+            userList: [],
+            domainUserList: [],
+            /**    
+             * addUser    
+             *    
+             * @param {String} aUserEmail    
+             * @param {String} aUserName    
+             * @param {Bool} aIsDomainUser    
+             */
+            addUser: function (aUserEmail, aUserName, aIsDomainUser) {
+                if (typeof (aIsDomainUser) == 'undefined') aIsDomainUser = false;
+                AppsUser.userList[AppsUser.userList.length] = {
+                    'user_email': aUserEmail,
+                    'user_name': aUserName
+                };
+                if (aIsDomainUser) {
+                    AppsUser.domainUserList[AppsUser.domainUserList.length] = {
+                        'user_email': aUserEmail,
+                        'user_name': aUserName
+                    };
+                }
+            },
+            
+            /**    
+             * getUser   
+             *    
+             * @param {String} aUserEmail    
+             * @return {Object}    
+             */
+            getUser: function (aUserEmail) {
+                var ret = null;
+                $.each(AppsUser.userList, function (i, user) {
+                    if (user.user_email == aUserEmail) {
+                        ret = user;
+                        return;
+                    }
+                });
+                return ret;
+            },
+
+            /**    
+             * getUserName    
+             *    
+             * メールアドレスよりユーザー名を返す    
+             *
+             * @param {String} aUserEmail    
+             * @return {String} ユーザー名    
+             */
+            getUserName: function (aUserEmail) {
+                var user = AppsUser.getUser(aUserEmail);
+                if (user == null) {
+                    return aUserEmail;
+                }
+                return user.user_name;
+            },
+
+            /**    
+             * requestUserList    
+             *    
+             * ユーザー一覧を取得し、カレンダーテーブルを構築    
+             *    
+             * @param {Object} callback コールバック関数    
+             * @param {Number} aNumRetry リトライ回数   
+             */
+            requestUserList: function (callback, aNumRetry) {
+                if (typeof (aNumRetry) == 'undefined') {
+                    aNumRetry = 1;
+                }
+                gadgets.io.makeRequest('https://sateraito-apps-myportal2.appspot.com/getuserlist', function (response) {
+                    // ユーザー一覧を取得したときのイベント
+                    if (!response.data) {
+                        // response error
+                        var err = response.errors[0];
+                        Sateraito.Util.console(err);
+                        Sateraito.MiniMessage.showTimerMessage('__MSG_RELOADING__ ' + aNumRetry);
+                        if (aNumRetry < Sateraito.EventController.MAX_RETRY) {
+                            AppsUser.requestUserList(callback, (aNumRetry + 1));
+                        } else {
+                            // １０回リトライしたがだめだった
+                            Sateraito.MiniMessage.showTimerMessage('__MSG_ERROR_WHILE_LOADING__', 10);
+                            AppsUser.userListLoadingStatus = 0;
+                        }
+                        return;
+                    }                    
+                    AppsUser.userListLoadingStatus = 2;
+
+                    // ユーザー一覧配列にセット
+                    AppsUser.userList = [];
+
+                    $.each(response.data, function (i, user) {
+                        var userEmail = user.user_email;
+                        var userName = user.family_name + ' ' + user.given_name;
+                        AppsUser.addUser(userEmail, userName, true);
+                    });
+
+                    // コールバックをキック
+                    callback(response.data);
+                }, Sateraito.Util.requestParam());
+            }
+        };
+
+        CalendarTable = {
+            /**    
+             * getHeaderDateHtml    
+             *    
+             * @param {String} aStartDate    
+             * @param {Number} aDayIndex    
+             *    
+             * @return {String}    
+             */
+            getHeaderDateHtml: function (aStartDate, aDayIndex) {
+                var v_html = '';
+                v_html += '<span class="date_of_week" day_index="' + aDayIndex + '">';
+                var dateStr = DateUtil.getFutureDateStr(aStartDate, aDayIndex);
+                v_html += DateUtil.getHeaderFormatDateStr(dateStr, aDayIndex);
+                v_html += '</span>';
+                return v_html;
+            },
+
+            /**    
+             * setDateRowColor    
+             *    
+             * 週ビューまたは日ビューについて週末および本日の色設定をする    
+             *    
+             * @param {Bool} aOnlyForDayView    
+             */
+            setDateRowColor: function (aOnlyForDayView) {
+                if (typeof (aOnlyForDayView) == 'undefined') {
+                    aOnlyForDayView = false;
+                }
+
+                //// 週ビュー部
+                if (!aOnlyForDayView) {
+                    var baseDate = DateMgr.getBaseDate();
+                    $('th.sateraito_date_col').each(function () {
+                        var dateStr = DateUtil.getFutureDateStr(baseDate, $(this).attr('day_index'));
+                        if (DateUtil.isSaturday(dateStr)) {
+                            $(this).addClass('header_saturday');
+                        } else if (DateUtil.isSunday(dateStr)) {
+                            $(this).addClass('header_sunday');
+                        } else {
+                            $(this).addClass('header_normalday');
+                        }
+                    });
+                    // 本日の色を設定
+                    var todayStr = DateUtil.getTodayStr();
+                    $('th.sateraito_date_col').removeClass('header_today');
+                    $('th.sateraito_date_col').each(function () {
+                        var newDateStr = DateUtil.getFutureDateStr(baseDate, $(this).attr('day_index'));
+                        if (newDateStr == todayStr) {
+                            $(this).addClass('header_today');
+                        }
+                    });
+                    $('td.sateraito_event_col').removeClass('body_today');
+                    $('td.sateraito_event_col[event_date="' + todayStr + '"]').addClass('body_today');
+                }
+            }
+        };
+
+        TagColor = {
+            _tagColors: [],
+            /**    
+             * getContinuingTagHtml    
+             *    
+             * @return {String} 前日からのスケジュールタグhtml    
+             */
+            getContinuingTagHtml: function () {
+                return '<span class="color_tag" style="color:white; background-color:#FF6600">__MSG_CONTINUING_EVENT__</span>';
+            },
+
+            /**    
+             * getTagHtml    
+             *    
+             * @param {String} aTitle    
+             * @param {String} aDescription    
+             * @return {String}    
+             */
+            getTagHtml: function (aTitle, aDescription) {
+                var tagColors = TagColor.getTagColors();
+                var vHtml = '';
+                $.each(tagColors, function () {
+                    if (aTitle.indexOf(this.tag_name) >= 0 || aDescription.indexOf(this.tag_name) >= 0) {
+                        vHtml += '<span class="color_tag" style="color:' + this.color + ';background-color:' + this.bgcolor + '">' + this.tag_name + '</span>';
+                    }
+                });
+                return vHtml;
+            },
+
+            /**    
+             * getTagColors    
+             *    
+             * @return {Array of Object} Object={tag_name, color, bgcolor}    
+             */
+            getTagColors: function () {
+                return TagColor._tagColors;
+            },
+
+            /**    
+             * setTagColors    
+             *    
+             * TODO:タグ色定義をサーバーから取得して本関数をコールする    
+             *    
+             * @param {Array of Object} aTagColors    
+             */
+            setTagColors: function (aTagColors) {
+                TagColor._tagColors = aTagColors;
+            }
+
+        };
+
+        DateMgr = {
+            _start_date_to_show: '',
+            day_view_date: '',
+
+            /**    
+             * getBaseDate    
+             *    
+             * @return {String} 表示基準日    
+             */
+            getBaseDate: function () {
+                return DateMgr._start_date_to_show;
+            },
+
+            /**    
+             * setBaseDateToday    
+             *    
+             * 表示基準日を本日にセット    
+             */
+            setBaseDateToday: function () {
+                var today = new Date();
+                DateMgr._start_date_to_show = DateUtil.myFormatDate(today);
+            }
+        };
+
+        DateUtil = {
+            dayOfWeek: ['(日)', '(月)', '(火)', '(水)', '(木)', '(金)', '(土)'],
+            dayOfWeekEn: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+            /**    
+             * getDateDiff    
+             *    
+             * @param {String} aDateSmall YYYY-MM-DD形式    
+             * @param {String} aDateBig YYYY-MM-DD形式    
+             */
+            getDateDiff: function (aDateSmall, aDateBig) {
+                // 開始日を日付オブジェクトに変換
+                var dateSmallSplited = aDateSmall.split('-');
+                var dateSmallObj = new Date(parseInt(dateSmallSplited[0], 10), parseInt(dateSmallSplited[1], 10) - 1, parseInt(dateSmallSplited[2], 10));
+                // 終了日を日付オブジェクトに変換
+                var dateBigSplited = aDateBig.split('-');
+                var dateBigObj = new Date(parseInt(dateBigSplited[0], 10), parseInt(dateBigSplited[1], 10) - 1, parseInt(dateBigSplited[2], 10));
+                var diff = dateBigObj - dateSmallObj;
+                var diffDay = diff / (24 * 60 * 60 * 1000); // マイクロ秒 --> 何日間に変換
+                return diffDay;
+            },
+
+            /**    
+             * getHeaderFormatDateStr    
+             *    
+             * ヘッダー行形式に日付文字列をフォーマットする    
+             *    
+             * @param {String} aDateStr YYYY-MM-DD形式の日付文字列    
+             * @param {Number} aDayIndex 曜日を表す数字    
+             *    
+             * @return {String} M/D(曜日)形式の文字列    
+             */
+            getHeaderFormatDateStr: function (aDateStr, aDayIndex) {
+                var prefs = new gadgets.Prefs();
+                if ('ja' == 'en' || 'ja' == 'en-gb') {
+                    return DateUtil.getDayOfWeekStrEn(aDateStr) + ' ' + DateUtil.getShortDateStr(aDateStr);
+                }
+                return DateUtil.getShortDateStr(aDateStr) + DateUtil.getDayOfWeekStr(aDateStr);
+            },
+
+            /**    
+             * getDayOfWeekStr    
+             *    
+             * 曜日を示す数字より文字列を返す    
+             *    
+             * @param {String} aDateStr 日付を示す文字列    
+             * @return {String} 曜日を示す文字列    
+             */
+            getDayOfWeekStr: function (aDateStr) {
+                var dateObj = DateUtil.dateStrToDateObj(aDateStr);
+                return DateUtil.dayOfWeek[dateObj.getDay()];
+            },
+
+            /**    
+             * getDayOfWeekStrEn    
+             *    
+             * 曜日を示す数字より文字列を返す（英語）    
+             *    
+             * @param {String} aDateStr 日付を示す文字列    
+             * @return {String} 曜日を示す文字列（英語）    
+             */
+            getDayOfWeekStrEn: function (aDateStr) {
+                var dateObj = DateUtil.dateStrToDateObj(aDateStr);
+                return DateUtil.dayOfWeekEn[dateObj.getDay()];
+            },
+
+            /**    
+             * getDatePartFromRfc3339    
+             *    
+             * RFC3339文字列の日付部分を返す    
+             *    
+             * @param {String} aRfc3339 RFC3339文字列    
+             * @return {String} YYYY-MM-DD文字列    
+             */
+            getDatePartFromRfc3339: function (aRfc3339) {
+                var rfc3339Splited = aRfc3339.split('T');
+                if (rfc3339Splited.length == 0) {
+                    return '';
+                }
+                return rfc3339Splited[0];
+            },
+
+            /**    
+             * getFutureDateStr    
+             *    
+             * delta日後の日付文字列を取得    
+             *    
+             * @param {String} aDateStr YYYY-MM-DD形式の日付文字列    
+             * @param {Number} aDelta 日付に足す日数    
+             * @return {String} YYYY-MM-DD 形式の日付文字列    
+             */
+            getFutureDateStr: function (aDateStr, aDelta) {
+                if (typeof (aDateStr) == 'undefined') {
+                    return null;
+                }
+                var dateStrSplited = aDateStr.split('-');
+                var retDate = new Date(parseInt(dateStrSplited[0], 10), parseInt(dateStrSplited[1], 10) - 1, parseInt(dateStrSplited[2], 10));
+                retDate.setTime(retDate.getTime() + aDelta * 24 * 60 * 60 * 1000);
+
+                return DateUtil.myFormatDate(retDate);
+            },
+
+            /**    
+             * getShortDateStr    
+             *    
+             * YYYY-MM-DD形式の日付文字列からM/D形式の日付文字列に変換    
+             *    
+             * @param {String} aDateStr YYYY-MM-DD形式文字列    
+             * @return {String} M/D形式文字列    
+             */
+            getShortDateStr: function (aDateStr) {
+                if (typeof (aDateStr) == 'undefined') {
+                    return null;
+                }
+                var dateSplited = aDateStr.split('-');
+                var monthPart = '' + parseInt(dateSplited[1], 10);
+                var dayPart = '' + parseInt(dateSplited[2], 10);
+                if (dayPart == 1) {
+                    // 1日の場合、月も含めて「5/1」
+                    return monthPart + '/' + dayPart;
+                }
+                return '' + dayPart;
+            },
+
+            /**    
+             * getTimePartFromRfc3339    
+             *    
+             * Get time part of string from rfc3339 formatted string    
+             *    
+             * @param {String} aRfc3339    
+             * @return {String} h:mm formatted string    
+             */
+            getTimePartFromRfc3339: function (aRfc3339) {
+                var splited3339 = aRfc3339.split('T');
+                if (splited3339.length == 1) {
+                    return '';
+                }
+                var splitedTime = splited3339[1].split(/[\+\-]/);
+                var restOfPart = splitedTime[1];
+                if (splited3339[1].indexOf('+', 0) != -1) {
+                    restOfPart = '+' + restOfPart;
+                }
+                if (splited3339[1].indexOf('-', 0) != -1) {
+                    restOfPart = '-' + restOfPart;
+                }
+                var localTimePartSplited = splited3339[1].split(':');
+                var hourPart = '' + parseInt(localTimePartSplited[0], 10);
+                var minutePart = localTimePartSplited[1];
+                return hourPart + ':' + minutePart;
+            },
+
+            /**    
+             * getTodayStr    
+             *    
+             * @return {String} 本日の日付文字列(YYYY-MM-DD)    
+             */
+            getTodayStr: function () {
+                var today = new Date();
+                return DateUtil.myFormatDate(today);
+            },
+
+            dateStrToDateObj: function (aDateStr) {
+                var dateSplited = aDateStr.split('-');
+                var yearPart = parseInt(dateSplited[0], 10);
+                var monthPart = parseInt(dateSplited[1], 10);
+                var dayPart = parseInt(dateSplited[2], 10);
+                return new Date(yearPart, monthPart - 1, dayPart);
+            },
+
+            isSaturday: function (aDateStr) {
+                if (DateUtil.dateStrToDateObj(aDateStr).getDay() == 6) {
+                    return true;
+                }
+                return false;
+            },
+
+            isSunday: function (aDateStr) {
+                if (DateUtil.dateStrToDateObj(aDateStr).getDay() == 0) {
+                    return true;
+                }
+                return false;
+            },
+
+            /**    
+             * myFormatDate    
+             *    
+             * 日付オブジェクトよりゼロ付きのYYYY-MM-DD形式文字列を返す    
+             *    
+             * @param {Date} aDate 日付    
+             * @return {String} YYYY-MM-DD形式文字列    
+             */
+            myFormatDate: function (aDate) {
+                var yearPart = aDate.getFullYear();
+                var monthPart = aDate.getMonth() + 1;
+                var dayPart = aDate.getDate();
+
+                if (monthPart < 10) monthPart = '0' + monthPart;
+                if (dayPart < 10) dayPart = '0' + dayPart;
+
+                return '' + yearPart + '-' + monthPart + '-' + dayPart;
+            },
+
+            /**    
+             * myFormatDateTime    
+             *    
+             * @param {Date} aDateTime    
+             * @return {String} YYYYMMDDHHMISS + 'Z'    
+             */
+            myFormatDateTime: function (aDateTime) {
+                var yearPart = aDateTime.getFullYear();
+                var monthPart = aDateTime.getMonth() + 1;
+                var dayPart = aDateTime.getDate();
+                var hourPart = aDateTime.getHours();
+                var minutePart = aDateTime.getMinutes();
+                var secondPart = aDateTime.getSeconds();
+
+                if (monthPart < 10) monthPart = '0' + monthPart;
+                if (dayPart < 10) dayPart = '0' + dayPart;
+                if (hourPart < 10) hourPart = '0' + hourPart;
+                if (minutePart < 10) minutePart = '0' + minutePart;
+                if (secondPart < 10) secondPart = '0' + secondPart;
+
+                return '' + yearPart + monthPart + dayPart + 'T' + hourPart + minutePart + secondPart + 'Z';
+            },
+
+            /**    
+             * timeStrToMin    
+             *    
+             * @param {String} aTimeStr    
+             * @return {Number}    
+             */
+            timeStrToMin: function (aTimeStr) {
+                var timeStrSplited = aTimeStr.split(':');
+                return parseInt(timeStrSplited[0], 10) * 60 + parseInt(timeStrSplited[1], 10);
+            }
+
+        };
+
+        AppsCalendarEvent = {
+
+            ATTENDEE_STATUS_ACCEPTED: 'ACCEPTED',
+            ATTENDEE_STATUS_INVITED: 'INVITED',
+            ATTENDEE_STATUS_DECLINED: 'DECLINED',
+            loadingStatus: [],
+
+            /**    
+             * onCalendarEventsLoad    
+             *    
+             * ユーザーのカレンダーイベントがロードされた時にコールされる    
+             *    
+             * @param {Object} aJsondata    
+             * @param {String} aEmailToGetEvent    
+             */
+            onCalendarEventsLoad: function (aJsondata, aEmailToGetEvent, aStartDateWhenRequestSend) {
+                // 表示開始日をチェック
+                var currentStartDate = DateMgr.getBaseDate();
+                if (currentStartDate != aStartDateWhenRequestSend) {
+                    // リクエストが戻ってきたときには、もうボタンを押して表示開始日がかわっていた
+                    return;
+                }
+
+                var currentLoadingStatus = AppsCalendarEvent.loadingStatus[aEmailToGetEvent];
+                if (currentLoadingStatus == 2) {
+                    // 既にこのユーザーのイベントは描画済み
+                    return;
+                }
+
+                // カレンダー名
+                var calendarName = aJsondata.calendar_name;
+                var displayedCalendarName = $('tr.sateraito_user_row[user_email="' + aEmailToGetEvent + '"]')
+                    .children('td:first')
+                    .children('label.user_name')
+                    .text();
+
+                if (Sateraito.Util.isMailAddress(displayedCalendarName)) {
+                    // 表示されている名前が、メールアドレスである場合
+                    if (calendarName != '' && !Sateraito.Util.isMailAddress(calendarName)) {
+                        // カレンダー名にメールアドレスでない何かが入っているので、それを表示する
+                        $('tr.sateraito_user_row[user_email="' + aEmailToGetEvent + '"]').children('td:first').children('label.user_name').text(calendarName);
+                    }
+                }
+
+                // カレンダーイベント
+                // show each data to table column
+                var events = aJsondata.events;
+                Ext.each(events, function (eventData, index) {
+                    // ロードしたイベントを描画する
+                    DisplayMgr.renderEvent(eventData, aEmailToGetEvent);
+                });
+
+                // 読込ステータスを「2:読込完了」にセット
+                AppsCalendarEvent.loadingStatus[aEmailToGetEvent] = 2;
+
+                // 「読込中」メッセージを消す
+                Sateraito.MiniMessage.clearMessage();
+
+                // 今日の日付色をセット
+                CalendarTable.setDateRowColor();
+            },
+
+            /**    
+             * requestUserCalendar    
+             *    
+             * @param {Object} aTab 選択されたタブ    
+             *    
+             * タブに設定されたページのGoogle内部IDを取得    
+             * 取得後は、ページの中身をリクエストする    
+             */
+            requestUserCalendar: function (aUserEmail, aNumRetry) {
+                if (typeof (aNumRetry) == 'undefined') {
+                    aNumRetry = 1;
+                }
+
+                var baseDate = DateMgr.getBaseDate();
+
+                // 読込ステータスを「1:読込中」にセット
+                AppsCalendarEvent.loadingStatus[aUserEmail] = 1;
+                gadgets.io.makeRequest('https://sateraito-apps-myportal2.appspot.com/getusercalendar?start_date=' + encodeURI(baseDate) + '&email_to_get_event=' + encodeURI(aUserEmail) + '&timezone=' + encodeURI(CalendarSetting.timezone), function (response) {
+                    if (!response.data) {
+                        // response error
+                        var err = response.errors[0];
+                        Sateraito.Util.console(err);
+
+                        Sateraito.MiniMessage.showTimerMessage('__MSG_RELOADING__ ' + aNumRetry);
+                        if (aNumRetry < Sateraito.EventController.MAX_RETRY) {
+                            AppsCalendarEvent.requestUserCalendar(aUserEmail, aNumRetry + 1);
+                        } else {
+                            // １０回リトライしたがだめだった
+                            Sateraito.MiniMessage.showTimerMessage('__MSG_ERROR_WHILE_LOADING__', 10);
+                            // 読込ステータスを「0:未ロード」にセット
+                            AppsCalendarEvent.loadingStatus[aUserEmail] = 0;
+                        }
+                        return;
+                    }
+
+                    var jsondata = response.data;
+                    AppsCalendarEvent.onCalendarEventsLoad(response.data, aUserEmail, baseDate);
+                }, Sateraito.Util.requestParam());
+            }
+        };
+
+        CalendarSetting = {
+            timezone: 'Asia/Tokyo',  // default timezone
+            nowLocaltime: '',
+            /**    
+             * requestCalendarSetting    
+             *    
+             * @param {function} aCallback    
+             * @param {number} aNumRetry    
+             */
+            requestCalendarSetting: function (aCallback, aNumRetry) {
+                if (typeof (aNumRetry) == 'undefined') {
+                    aNumRetry = 1;
+                }
+
+                gadgets.io.makeRequest('https://sateraito-apps-myportal2.appspot.com/getcalendarsetting', function (response) {
+                    if (!response.data) {
+                        // response error
+                        var err = response.errors[0];
+                        Sateraito.Util.console(err);
+                        Sateraito.MiniMessage.showTimerMessage('__MSG_RELOADING__ ' + aNumRetry);
+                        if (aNumRetry < Sateraito.EventController.MAX_RETRY) {
+                            CalendarSetting.requestCalendarSetting(aCallback, (aNumRetry + 1));
+                        } else {
+                            // １０回リトライしたがだめだった
+                            Sateraito.MiniMessage.showTimerMessage('__MSG_ERROR_WHILE_LOADING__', 10);
+                        }
+                        return;
+                    }
+
+                    // 読込中メッセージを消去
+                    Sateraito.MiniMessage.clearMessage();
+
+                    var jsondata = response.data;
+
+                    // タイムゾーンを保存
+                    CalendarSetting.timezone = jsondata.timezone;
+
+                    // 現在サーバー時間を保存
+                    CalendarSetting.nowLocaltime = jsondata.now_localtime;
+
+                    // コールバックをキック
+                    aCallback();
+
+                }, Sateraito.Util.requestParam());
+            }
+        };
+
+        MyTab = {
+            tabSettings: [],
+            tabSet: null,
+            hideAd: false,
+
+            /**    
+             * loadTabSetting    
+             *    
+             * ガジェットの設定より、表示カレンダーの設定をロード    
+             */
+            loadTabSetting: function () {
+                var prefs = new gadgets.Prefs();
+                MyTab._pushTabSetting(prefs.getString('additional_calendar_email_1'), prefs.getString('additional_calendar_name_1'));
+                MyTab._pushTabSetting(prefs.getString('additional_calendar_email_2'), prefs.getString('additional_calendar_name_2'));
+                MyTab._pushTabSetting(prefs.getString('additional_calendar_email_3'), prefs.getString('additional_calendar_name_3'));
+                MyTab._pushTabSetting(prefs.getString('additional_calendar_email_4'), prefs.getString('additional_calendar_name_4'));
+                MyTab._pushTabSetting(prefs.getString('additional_calendar_email_5'), prefs.getString('additional_calendar_name_5'));
+                MyTab._pushTabSetting(prefs.getString('additional_calendar_email_6'), prefs.getString('additional_calendar_name_6'));
+                MyTab._pushTabSetting(prefs.getString('additional_calendar_email_7'), prefs.getString('additional_calendar_name_7'));
+                MyTab._pushTabSetting(prefs.getString('additional_calendar_email_8'), prefs.getString('additional_calendar_name_8'));
+                MyTab._pushTabSetting(prefs.getString('additional_calendar_email_9'), prefs.getString('additional_calendar_name_9'));
+                MyTab._pushTabSetting(prefs.getString('additional_calendar_email_10'), prefs.getString('additional_calendar_name_10'));
+            },
+
+            /**    
+             * _pushTabSetting    
+             *    
+             * @param {String} aEmail    
+             * @param {String} aName    
+             */
+            _pushTabSetting: function (aEmail, aName) {
+                if (typeof (aEmail) == 'undefined' || typeof (aName) == 'undefined') {
+                    return;
+                }
+                if (aEmail == '' || aName == '') {
+                    return;
+                }
+
+                // メールアドレスの重複チェック
+                var foundSameEmail = false;
+                $.each(MyTab.tabSettings, function () {
+                    if (this.email == aEmail) {
+                        foundSameEmail = true;
+                    }
+                });
+
+                // 設定追加
+                if (!foundSameEmail) {
+                    MyTab.tabSettings.push({
+                        'email': aEmail,
+                        'name': aName
+                    });
+                }
+            },
+
+            /**    
+             * getCurrentTimeStr    
+             *    
+             * @return H:MM 形式の現在時間    
+             */
+            getCurrentTimeStr: function () {
+                var dd = new Date();
+                var hourPart = dd.getHours();
+                var minutePart = dd.getMinutes();
+                if (minutePart < 10) minutePart = '0' + minutePart;
+                return '' + hourPart + ':' + minutePart;
+            },
+
+            /**    
+             * createTabPage    
+             *    
+             * @param {String} aUserEmail    
+             * @param {String} aDisplayName    
+             * @param {String} aUrl    
+             * @return {Object}    
+             */
+            createTabPage: function (aUserEmail, aDisplayName, aUrl) {
+                // ページの一番下の行
+                var SATERAITO_OFFICE_DESCRIPTION_HEIGHT = 20;
+                var vHtmlLink = '';
+                vHtmlLink += '<span onclick="Sateraito.GadgetSetting.showSettingWindow();" style="cursor:pointer; color:#909090; margin:2px; padding:2px; font-size:12px;" target="_blank">';
+                vHtmlLink += '__MSG_SETTING__';
+                vHtmlLink += '</span>';
+                vHtmlLink += '<span onclick="window.location.reload();" style="cursor:pointer; color:#909090; margin:2px; padding:2px; font-size:12px;" target="_blank">';
+                //      vHtmlLink += '__MSG_RELOAD_GADGET__';
+                vHtmlLink += '更新';
+                vHtmlLink += '(最終更新:' + MyTab.getCurrentTimeStr() + ')';
+                vHtmlLink += '△';
+                vHtmlLink += '</span>';
+                if (!MyTab.hideAd) {
+                    vHtmlLink += '<a href="http://www.sateraito.jp/" style="text-decoration:none; color:green; margin:2px; padding:2px; font-size:12px;" target="_blank">';
+                    vHtmlLink += '__MSG_SATERAITO_OFFICE_MY_PORTAL_GADGET_FOR_GOOGLE_APPS__';
+                    vHtmlLink += '</a>';
+                    vHtmlLink += '&nbsp;';
+                    vHtmlLink += '<a href="http://www.sateraito.jp/yobo.html" style="text-decoration:none; color:#909090; margin:2px; padding:2px; font-size:12px;" target="_blank">';
+                    vHtmlLink += '__MSG_REQUIREMENT__';
+                    vHtmlLink += '</a>';
+                }
+
+                var vHtmlTable = '';
+                vHtmlTable += '<table class="sateraito" style="width:100%">';
+                vHtmlTable += '<tr>';
+                vHtmlTable += '<th class="sateraito sateraito_date_col">';
+                vHtmlTable += '</th>';
+                baseDate = DateMgr.getBaseDate();
+                for (var i = 0; i < 7; i++) {
+                    vHtmlTable += '<th class="sateraito_date_col" day_index="' + i + '">';
+                    vHtmlTable += CalendarTable.getHeaderDateHtml(baseDate, i);
+                    vHtmlTable += '</th>';
+                }
+
+                vHtmlTable += '</tr>';
+                vHtmlTable += '<tr class="sateraito_user_row" user_email="' + aUserEmail + '">';
+                vHtmlTable += '<td class="sateraito sateraito_user_col" title="' + aUserEmail + '">';
+                vHtmlTable += '<label class="user_name">';
+                vHtmlTable += AppsUser.getUserName(aUserEmail);
+                vHtmlTable += '</label>';
+
+                // 自分のカレンダーには、「開く」リンクを表示
+                if (aUserEmail == LoginMgr.loginUserEmail) {
+                    vHtmlTable += '<br />';
+                    vHtmlTable += '<a href="https://www.google.com/calendar/hosted/g.power-studio.com/render" style="text-decoration:none; color:#909090; margin:2px; padding:2px; font-size:12px;" target="_blank">';
+                    vHtmlTable += '__MSG_OPEN__';
+                    vHtmlTable += '</a>';
+                }
+
+                vHtmlTable += '</td>';
+                for (var i = 0; i < 7; i++) {
+                    var eventDate = DateUtil.getFutureDateStr(baseDate, i);
+                    vHtmlTable += '<td class="sateraito sateraito_event_col"';
+                    vHtmlTable += ' day_index="' + i + '"';
+                    vHtmlTable += ' user_email="' + aUserEmail + '"';
+                    vHtmlTable += ' event_date="' + eventDate + '"';
+                    vHtmlTable += '>';
+                    vHtmlTable += '<div class="event_render_area"></div>';
+                    vHtmlTable += '<div style="text-align:right;">';
+                    vHtmlTable += '<span class="bulk_create_event" day_index="' + i + '">__MSG_ADD_EVENT__</span>';
+                    vHtmlTable += '</div>';
+                    vHtmlTable += '</td>';
+                }
+
+                vHtmlTable += '</tr>';
+                vHtmlTable += '</table>';
+
+                return {
+                    id: 'tab_' + aUserEmail,
+                    url: aUrl,
+                    tabName: aUserEmail,
+                    autoWidth: true,
+                    height: 170,
+                    title: aDisplayName,
+                    listeners: {
+                        activate: function (aTab) {
+                            var tabHeight = aTab.getHeight();
+                            $('#tab_content_' + aTab.tabName).height(tabHeight - SATERAITO_OFFICE_DESCRIPTION_HEIGHT);
+
+                            // 自分のカレンダーデータをリクエスト
+                            if (AppsCalendarEvent.loadingStatus[aTab.tabName] == 2) {
+                                // no option
+                            } else {
+                                Sateraito.MiniMessage.showLoadingMessage();
+                                // カレンダーデータをリクエスト
+                                AppsCalendarEvent.requestUserCalendar(aTab.tabName);
+                            }
+                        }
+                    },
+                    html: '<div id="tab_content_' + aUserEmail + '">' + vHtmlTable + '</div><div style="height:' + SATERAITO_OFFICE_DESCRIPTION_HEIGHT + 'px;">' + vHtmlLink + '</div>'
+                };
+            },
+
+            /**    
+             * buildTab    
+             *    
+             * タブセット、タブページ、グリッドを構築する    
+             *    
+             * @return {Bool} タブビューが作成された場合はTrue    
+             */
+            buildTab: function () {
+                // タブを構築
+                MyTab.tabSet = new Ext.TabPanel({
+                    id: 'tab_set',
+                    activeTab: 0,
+                    defaults: { autoScroll: true },
+                    enableTabScroll: true,
+                    plain: true,
+                    items: []
+                });
+
+                // ビューポート構築
+                MyTab.tabSet.region = 'center';
+                var myViewPort = new Ext.Viewport({
+                    height: Sateraito.GadgetHeight.getUserPrefs(),
+                    layout: 'border',
+                    style: 'background-color: white;',
+                    items: [MyTab.tabSet]
+                });
+
+                // 「自分の予定」タブ
+                MyTab.tabSet.add(MyTab.createTabPage(LoginMgr.loginUserEmail, '__MSG_TAB_NAME_MY_CALENDAR__'));
+
+                // 各カレンダーをタブに追加
+                Ext.each(MyTab.tabSettings, function (aSetting) {
+                    // タブを構築
+                    MyTab.tabSet.add(MyTab.createTabPage(aSetting.email, aSetting.name));
+                });
+
+                // 「自分のカレンダー」のタブを選択
+                MyTab.tabSet.setActiveTab('tab_' + LoginMgr.loginUserEmail);
+
+                //// イベントハンドラ
+                // イベント名クリック時の処理
+                $('div.sateraito_event_summary').live('click', function (e) {
+                    // イベント詳細パネルを表示
+                    DisplayMgr.showEventDetail(this);
+
+                    // bodyのクリックイベントでイベント詳細パネルを消しているので、クリックイベントをバブリングさせない
+                    e.stopPropagation();
+                });
+
+                // イベント詳細を閉じるハンドラ
+                $('img.btn_close_event_detail').live('click', function () {
+                    // イベント詳細を閉じる
+                    $('div.sateraito_event_detail').remove();
+                });
+
+                // イベント詳細を閉じるハンドラ
+                $('body').live('click', function () {
+                    // イベント詳細を閉じる
+                    $('div.sateraito_event_detail').remove();
+                });
+
+                // クリックのバブリング停止用クラス
+                $('.do_not_bubble_click').live('click', function (e) {
+                    e.stopPropagation();
+                });
+
+                // 「予定追加」クリック時の処理
+                $('span.bulk_create_event').live('click', function () {
+                    var dayIndex = $(this).attr('day_index');
+                    var baseDate = DateMgr.getBaseDate();
+                    var clickedDateStr = DateUtil.getFutureDateStr(baseDate, dayIndex);
+                    var dateSplited = clickedDateStr.split('-');
+                    var yearPart = dateSplited[0]
+                    var vNow = new Date();
+                    var vDate = new Date(dateSplited[0], dateSplited[1] - 1, dateSplited[2], vNow.getHours(), 0, 0);
+
+                    // UTCへ変換(９時間引く)
+                    vDate.setTime(vDate.getTime() - 9 * 60 * 60 * 1000);
+                    vDate.setTime(vDate.getTime() + 1 * 60 * 60 * 1000);
+                    var dateTimeFrom = DateUtil.myFormatDateTime(vDate);
+                    vDate.setTime(vDate.getTime() + 1 * 60 * 60 * 1000);
+                    var dateTimeTo = DateUtil.myFormatDateTime(vDate);
+                    var userEmail = $(this).parents('td.sateraito_event_col:first').attr('user_email');
+                    var vHref = 'https://www.google.com/calendar/hosted/g.power-studio.com/event';
+                    vHref += '?action=TEMPLATE';
+                    vHref += '&text=__MSG_NEW_EVENT__';
+                    vHref += '&dates=' + dateTimeFrom + '/' + dateTimeTo;
+                    if (userEmail != LoginMgr.loginUserEmail) {
+                        vHref += '&add=' + userEmail;
+                    }
+                    vHref += '&sprop=';
+                    window.open(encodeURI(vHref));
+                });
+
+                return true;
+            }
+        };
+
+        LoginMgr = {
+
+            loginUserEmail: null,
+            /**    
+             * checkUser    
+             *    
+             * @param {Number} aNumRetry    
+             */
+            checkUser: function (aNumRetry) {
+                if (typeof (aNumRetry) == 'undefined') {
+                    aNumRetry = 1;
+                }
+                // ユーザーチェックをし、OKならデータロード、NGなら認証リンクを表示する
+                gadgets.io.makeRequest('https://sateraito-apps-myportal2.appspot.com/checkuser', function (response) {
+                    if (!response.data) {
+                        // response error
+                        var err = response.errors[0];
+                        Sateraito.Util.console(err);
+                        Sateraito.MiniMessage.showTimerMessage('__MSG_RELOADING__ ' + aNumRetry);
+
+                        if (aNumRetry < Sateraito.EventController.MAX_RETRY) {
+                            LoginMgr.checkUser(aNumRetry + 1);
+                        } else {
+                            // １０回リトライしたがだめだった
+                            // 読込中メッセージを消去
+                            Sateraito.MiniMessage.clearMessage();
+
+                            // エラーメッセージ
+                            if (response.rc === 401) {
+                                Sateraito.MiniMessage.showTimerMessage('__MSG_ERROR_TIMEOUT__', 60 * 60 * 24);
+                            } else {
+                                Sateraito.MiniMessage.showTimerMessage('__MSG_ERROR_WHILE_LOADING__', 10);
+                            }
+                        }
+                        return;
+                    }
+                    LoginMgr.onCheckUser(response.data);
+                }, Sateraito.Util.requestParam());
+            },
+
+            /**    
+             * onUserCheckOk    
+             */
+            onUserCheckOk: function () {
+                // ガジェットのタブ設定をロード
+                MyTab.loadTabSetting();
+
+                // ドメイン内ユーザー一欄を取得
+                AppsUser.requestUserList(function (jsondata) {
+                    Sateraito.GadgetSetting.requestGetGadgetSetting(function (aSettingObj) {
+                        MyTab._pushTabSetting(aSettingObj.user_calendar_email_1, aSettingObj.user_calendar_name_1);
+                        MyTab._pushTabSetting(aSettingObj.user_calendar_email_2, aSettingObj.user_calendar_name_2);
+                        MyTab._pushTabSetting(aSettingObj.user_calendar_email_3, aSettingObj.user_calendar_name_3);
+                        CalendarSetting.requestCalendarSetting(function () {
+                            // タブを構築し、各タブのデータをロード
+                            MyTab.buildTab();
+                        });
+
+                    });
+                });
+
+            },
+
+            /**   
+             * onCheckUser    
+             *    
+             * @param {Object} aJsonData    
+             *    
+             * ユーザーチェックをし、OKならデータロード、NGなら認証リンクを表示する    
+             */
+            onCheckUser: function (aJsonData) {
+                // 読込中メッセージを消去
+                Sateraito.MiniMessage.clearMessage();
+
+                // User exists, OpenID must have occurred previously.
+                //      var aJsonData = response.data;
+                if (aJsonData.is_error) {
+                    // エラーの場合
+                    if (aJsonData.error_code == 'unable_to_get_opensocial_id') {
+                        // opensocial idが取得できない場合
+                        // 認証情報が取得できませんでした
+                        var vHtml = '';
+                        vHtml += '<span style="font-weight:bold; color:red;">';
+                        vHtml += '__MSG_FAILED_TO_GET_SIGN_IN_INFO__';
+                        vHtml += '</span>';
+                        Ext.select('#output').update(vHtml);
+                    } else {
+                        // その他のエラー
+                        var vHtml = '';
+                        vHtml += '<span style="font-weight:bold; color:red;">';
+                        vHtml += '__MSG_ERROR__';
+                        vHtml += '</span>';
+                        Ext.select('#output').update(vHtml);
+                    }
+                } else {
+                    if (aJsonData.user_exists) {
+                        // ユーザー登録済みの場合
+                        LoginMgr.loginUserEmail = aJsonData.user_email;
+                        if (aJsonData.user_disabled) {
+                            // ガジェット使用禁止フラグが立っている場合
+                            var vHtml = '';
+                            vHtml += '<div class="message">';
+                            vHtml += '__MSG_UNABLE_TO_SIGN_IN_ASK_ADMIN__';
+                            vHtml += '</div>';
+                            Ext.select('#output').update(vHtml);
+                        } else if (aJsonData.domain_disabled) {
+                                // ドメイン使用停止フラグが立っている場合
+                            var vHtml = '';
+                            vHtml += '<div class="message">';
+                            vHtml += '__MSG_THIS_APPRICATION_IS_STOPPED_FOR_YOUR_DOMAIN__';
+                            vHtml += '</div>';
+                            Ext.select('#output').update(vHtml);
+                        } else {
+                            // OKの場合
+                            // 一旦「認証」表示を消す
+                            Ext.select('#output').update('');
+                            // 広告非表示フラグ
+                            MyTab.hideAd = aJsonData.hide_ad;
+                            // ユーザーOKイベントハンドラをキック
+                            LoginMgr.onUserCheckOk();
+                        }
+
+                    } else {
+                        // ユーザーが未登録の場合
+                        var url = aJsonData.popup;
+                        var vHtml = '';
+                        if (aJsonData.multi_domain_setting) {
+                            // マルチドメイン設定の場合
+                            vHtml += '<div class="messag">';
+                            vHtml += '<p>';
+                            vHtml += '<a href="javascript:void(0);" onclick="DisplayMgr.openPopup(\'' + url + '\');">';
+                            vHtml += '__MSG_CLICK_HERE_TO_SIGN_IN__';
+                            if ('ja' == 'en' || 'ja' == 'en_gb') {
+                                vHtml += '( for g.power-studio.com users)';
+                            } else {
+                                vHtml += '(g.power-studio.comドメインのユーザー)';
+                            }
+                            vHtml += '</a>';
+                            vHtml += '</p>';
+                            vHtml += '<br />';
+                            var subdomainUrl = 'https://sateraito-apps-myportal2.appspot.com/' + aJsonData.token + '/popup_subdomain.html';
+                            vHtml += '<p>';
+                            vHtml += '<a href="javascript:void(0);" onclick="DisplayMgr.openPopup(\'' + subdomainUrl + '\');">';
+                            vHtml += '__MSG_CLICK_HERE_TO_SIGN_IN__';
+                            vHtml += '(__MSG_FOR_OTHER_DOMAIN_USER__)';
+                            vHtml += '</a>';
+                            vHtml += '</p>';
+                            vHtml += '</div>';
+                        } else {
+                            // シングルドメイン設定の場合
+                            vHtml += '<div class="message">';
+                            vHtml += '<p>';
+                            vHtml += '<a href="javascript:void(0);" onclick="DisplayMgr.openPopup(\'' + url + '\');">';
+                            vHtml += '__MSG_CLICK_HERE_TO_SIGN_IN__';
+                            vHtml += '</a>';
+                            vHtml += '</p>';
+                            vHtml += '</div>';
+                        }
+                        Ext.select('#output').update(vHtml);
+                    }
+                }
+            }
+        };
+
+        DisplayMgr = {
+            /**    
+             * getColorClassByStartTime    
+             *    
+             * @param {String} aStartTime    
+             * @return {String}    
+             */
+            getColorClassByStartTime: function (aStartTime) {
+                var startTimeByMin = DateUtil.timeStrToMin(aStartTime);
+                if (startTimeByMin < 13 * 60 + 0) {
+                    return 'early-time-colored';
+                }
+                if (startTimeByMin < 18 * 60 + 0) {
+                    return 'mid-time-colored';
+                }
+                return 'late-time-colored';
+            },
+
+            /**    
+             * getEventDetailHtml    
+             *    
+             * @param {Bool} aHideCloseButton    
+             * @param {Array} aParticipants    
+             * @param {String} aEventName    
+             * @param {String} aWhere    
+             * @param {String} aDescription    
+             * @param {String} aEventId    
+             * @param {String} aEventDate    
+             * @param {String} aStartTime    
+             * @param {String} aEndTime    
+             * @param {String} aIsContinuingEvent '1' または '0'    
+             */
+            getEventDetailHtml: function (aHideCloseButton, aParticipants, aEventName, aWhere, aDescription, aEventId, aEventDate, aStartTime, aEndTime, aIsContinuingEvent) {
+                var v_html = '<div class="sateraito_event_detail do_not_bubble_click';
+                if (aHideCloseButton == true) {
+                    v_html += ' hide_close_button';
+                }
+                v_html += '">';
+                v_html += '<table class="layout" width="100%">';
+                v_html += '<tr class="layout">';
+                v_html += '<td class="layout" style="padding-bottom:10px;">';
+                v_html += '<div style="word-wrap:break-word;">';
+                v_html += aEventName;
+
+                // タグ
+                v_html += '&nbsp;';
+                if (aIsContinuingEvent == '1') {
+                    v_html += TagColor.getContinuingTagHtml();
+                }
+                v_html += TagColor.getTagHtml(aEventName, aDescription);
+                v_html += '</div>';
+                v_html += '</td>';
+                v_html += '<td class="layout" style="text-align:right;">';
+                if (!aHideCloseButton) {
+                    v_html += '<img src="https://sateraito-apps-myportal2.appspot.com/static/btn_delete.png" class="btn_close_event_detail" />';
+                }
+                v_html += '</td>';
+                v_html += '</tr>';
+                v_html += '</table>';
+                v_html += '<table class="layout">';
+                if (aWhere != '') {
+                    v_html += '<tr class="layout">';
+                    v_html += '<th class="layout" nowrap>';
+                    v_html += '__MSG_EVENT_LOCATION__';
+                    v_html += '</th>';
+                    v_html += '<td class="layout" colspan="2">';
+                    v_html += aWhere;
+                    v_html += ' <a href="http://maps.google.co.jp/maps?hl=ja&q=' + encodeURI(aWhere) + '" target="_blank">';
+                    v_html += '__MSG_EVENT_LOCATION_MAP__';
+                    v_html += '</a>';
+                    v_html += '</td>';
+                    v_html += '</tr>';
+                }
+                v_html += '<tr class="layout">';
+                v_html += '<th class="layout" nowrap>';
+                v_html += '__MSG_EVENT_DESCRIPTION__';
+                v_html += '</th>';
+                v_html += '<td class="layout" colspan="2" style="white-space:pre-wrap; word-wrap:break-word; word-break:break-all; display:block; width:350px;">';
+                v_html += aDescription;
+                v_html += '</td>';
+                v_html += '</tr>';
+                v_html += '<tr class="layout">';
+                v_html += '<th class="layout" nowrap>';
+                v_html += '__MSG_ATTENDEE__';
+                v_html += '</th>';
+                v_html += '<td class="layout" colspan="2">';
+                v_html += '<table class="layout">';
+                var emailList = [];
+                Ext.each(aParticipants, function (value, i) {
+                    emailList.push(value.email);
+                    v_html += '<tr class="layout">';
+                    v_html += '<td class="layout">';
+                    v_html += '<span title="' + value.email + '">';
+                    if (value.name == value.email) {
+                        v_html += AppsUser.getUserName(value.email);
+                    } else {
+                        v_html += value.name;
+                    }
+                    if (aParticipants.length > 1) {
+                        if (value.value == 'ORGANIZER') {
+                            v_html += '__MSG_ORGANIZER__';
+                        }
+                    }
+                    v_html += '</span>';
+                    v_html += '</td>';
+                    v_html += '<td class="layout">';
+
+                    if (value.attendee_status == AppsCalendarEvent.ATTENDEE_STATUS_ACCEPTED) {
+                        v_html += '<span class="accepted">__MSG_STATUS_ACCEPTED__</span>';
+                    } else if (value.attendee_status == AppsCalendarEvent.ATTENDEE_STATUS_INVITED) {
+                        v_html += '<span class="invited">__MSG_STATUS_INVITED__</span>';
+                    } else if (value.attendee_status == AppsCalendarEvent.ATTENDEE_STATUS_DECLINED) {
+                        v_html += '<span class="declined">__MSG_STATUS_DECLINED__</span>';
+                    }
+                    v_html += '</td>';
+                    v_html += '</tr>';
+                });
+                v_html += '</table>';
+                v_html += '</td>';
+                v_html += '</tr>';
+                v_html += '</table>';
+                v_html += '<div style="display:block;float:left;text-align:left;">';
+                v_html += '</div>';
+                v_html += '<div style="display:block;float:right;text-align:right;">';
+                v_html += '<a href="https://www.google.com/calendar/hosted/g.power-studio.com/render?eid=' + aEventId + '" target="_blank">';
+                v_html += '__MSG_SHOW_EVENT_DETAIL__ »';
+                v_html += '</a>';
+                v_html += '</div>';
+                v_html += '</div>';
+                return v_html;
+            },
+
+            /**    
+             * openPopup    
+             *    
+             * @param {String} aUrl    
+             */
+            openPopup: function (aUrl) {
+                var popup = window.open(aUrl, '__MSG_SIGN_IN__');
+                // Check every 1000 ms if the popup is closed.
+                finishedInterval = setInterval(function () {
+                    // If the popup is closed, we've either finished OpenID, or the user closed it. Verify with the server in case the
+                    // user closed the popup.
+                    if (popup.closed) {
+                        //          gadgets.io.makeRequest('https://sateraito-apps-myportal2.appspot.com/checkuser', LoginMgr.onCheckUser, Sateraito.Util.requestParam());
+                        LoginMgr.checkUser();
+                        clearInterval(finishedInterval);
+                    }
+                }, 1000);
+
+            },
+
+            /**    
+             * _renderEvent    
+             *    
+             * プライペート関数   
+             *    
+             * @param {String} aEventDate    
+             * @param {String} startTime    
+             * @param {String} endTime    
+             * @param {Object} aEventData    
+             * @param {String} aCalendarId    
+             * @param {Bool} aIsContinuingEvent    
+             */
+            _renderEvent: function (aEventDate, startTime, endTime, aEventData, aCalendarId, aIsContinuingEvent) {
+                if (typeof (aIsContinuingEvent) == 'undefined') {
+                    aIsContinuingEvent = false;
+                }
+
+                // イベントID
+                var eventId = aEventData.event_id;
+                var timeDescription = '';
+                if (startTime == '') {
+                    // 終日である
+                    endTime = '';
+                    timeDescription = '<span class="all-day-colored">__MSG_MARK_ALL_DAY__</span>';
+                } else {
+                    timeDescription = '<span class="' + DisplayMgr.getColorClassByStartTime(startTime) + '">__MSG_LEFT_BRACKET__' + startTime + '-' + endTime + '__MSG_RIGHT_BRACKET__</span>';
+                }
+
+                // 参加者
+                var participants = aEventData.participants;
+
+                // 場所
+                var where = aEventData.where;
+                if (where == null) {
+                    where = '';
+                }
+
+                // 予定のタイトル
+                var eventName = aEventData.event_name;
+                if (aEventData.event_name == null) {
+
+                    // イベント名がない場合
+                    if (aCalendarId != LoginMgr.loginUserEmail && aEventData.visibility == 'PRIVATE' && aEventData.content == null) {
+                        // 限定公開かどうか
+                        // 1. 自分のスケジュールではない、2. 限定公開スケジュールである 3. イベントの説明がない
+                        // --> 予定のタイトルを「予定あり」にする
+                        eventName = '__MSG_EVENT_EXISTS__';
+                    } else {
+                        eventName = '__MSG_NO_TITLE__';
+                    }
+                }
+
+                // 説明
+                var eventDescription = aEventData.content;
+                if (aEventData.content == null) {
+                    eventDescription = '';
+                }
+
+                // イベント日がaEventDateと等しく、かつ
+                // イベント終了時間がstartTimeよりあとのイベントがあった場合、それは時間重複している
+                // 自分に時間重複フラグを立てる
+                var start_time_min = DateUtil.timeStrToMin(startTime);
+                var wrapped = 0;
+                $('td.sateraito_event_col[user_email="' + aCalendarId + '"][event_date="' + aEventDate + '"]')
+                    .children('div.event_render_area')
+                    .children('div.event').each(function () {
+                        var end_time_already_pasted = $(this).attr('end_time');
+                        var end_time_already_pasted_min = DateUtil.timeStrToMin(end_time_already_pasted);
+                        if (start_time_min < end_time_already_pasted_min) {
+                            wrapped = 1;
+                            return false;
+                        }
+                    });
+
+                var eventSummaryHtml = '<div class="event" event_id="' + eventId + '" start_time="' + startTime + '" end_time="' + endTime + '" user_email="' + aCalendarId + '" wrapped="' + wrapped + '">';
+                eventSummaryHtml += timeDescription;
+
+                //// タグ
+                var tagHtml = '';
+
+                // 前日からの継続イベントの場合、「前日からのスケジュール」タグをつける
+                if (aIsContinuingEvent) {
+                    tagHtml += TagColor.getContinuingTagHtml();
+                }
+
+                tagHtml += TagColor.getTagHtml(eventName, eventDescription);
+
+                if (tagHtml != '') {
+                    eventSummaryHtml += '<br />' + tagHtml;
+                }
+                eventSummaryHtml += '<div class="sateraito_event_summary"';
+                eventSummaryHtml += ' is_multiple_day_event="' + Sateraito.Util.myBoolToNum(aIsContinuingEvent) + '"';
+                eventSummaryHtml += ' where="' + where + '"';
+                eventSummaryHtml += ' description="' + eventDescription + '"';
+                eventSummaryHtml += ' event_id="' + eventId + '">';
+                eventSummaryHtml += '<div class="event_name">';
+                eventSummaryHtml += eventName;
+                eventSummaryHtml += '</div>';
+                eventSummaryHtml += '</div>';
+                eventSummaryHtml += '</div>';
+
+                // イベント貼り付け
+                $('td.sateraito_event_col[user_email="' + aCalendarId + '"][event_date="' + aEventDate + '"]')
+                    .children('div.event_render_area')
+                    .append(eventSummaryHtml)
+                    .find('div.sateraito_event_summary[event_id="' + eventId + '"]')
+                    .data('participants', participants);
+            },
+
+            /**    
+             * renderEvent    
+             *    
+             * イベントデータを表示中のカレンダーに埋め込み表示する   
+             *    
+             * @param {Object} aEventData    
+             * @param {String} aCalendarId    
+             */
+            renderEvent: function (aEventData, aCalendarId) {
+                // お断りしたイベントかどうかチェックする
+                // お断りしたイベントなら描画しない
+                var is_declined_event = false;
+                Ext.each(aEventData.participants, function (val, i) {
+                    var user_email = val.email;
+                    var attendee_status = val.attendee_status;
+                    if (attendee_status == AppsCalendarEvent.ATTENDEE_STATUS_DECLINED && user_email == aCalendarId) {
+                        is_declined_event = true;
+                        return false;
+                    }
+                });
+
+                if (is_declined_event) {
+                    // お断りしたイベントなので、終了
+                    return;
+                }
+
+                if (aEventData.prohibited == 1) {
+                    // 非共有につき閲覧権限なし
+                    $('td.sateraito_event_col[user_email="' + aCalendarId + '"][event_date="' + aEventData.event_date + '"]').html('<b>共有されていません</b>');
+                } else {
+
+                    // イベント開始時間
+                    var eventStartDate = DateUtil.getDatePartFromRfc3339(aEventData.start_time);
+                    var eventStartTime = DateUtil.getTimePartFromRfc3339(aEventData.start_time);
+
+                    // イベント終了時間
+                    var eventEndDate = DateUtil.getDatePartFromRfc3339(aEventData.end_time);
+                    var eventEndTime = DateUtil.getTimePartFromRfc3339(aEventData.end_time);
+
+                    // 終日イベントかどうか
+                    var isAllDayEvent = false;
+                    if (eventStartTime == '') {
+                        // 終日イベント＝開始日時の時間部分がない
+                        isAllDayEvent = true;
+                    }
+
+                    // イベント開始日の次の日
+                    var eventStartDateTomorrow = DateUtil.getFutureDateStr(eventStartDate, 1);
+
+                    if (isAllDayEvent) {
+                        // 終日イベントの場合
+                        if (eventEndDate == eventStartDateTomorrow) {
+
+                            // 終日イベントで、かつイベント終了日が次の日
+                            // ＝ 開始日の終日イベント
+                            // 一日で収まるイベントである
+                            DisplayMgr._renderEvent(eventStartDate, eventStartTime, eventEndTime, aEventData, aCalendarId);
+                        } else {
+                            // 終日イベントで、かつイベント終了日が次の日ではない
+                            // ＝ 開始日から(終了日-1)までの終日イベント
+                            // 一日で収まるイベントではない
+                            var daysOfEvents = DateUtil.getDateDiff(eventStartDate, eventEndDate);
+                            for (var i = 0; i < daysOfEvents; i++) {
+                                var eventDate = DateUtil.getFutureDateStr(eventStartDate, i);
+                                if (eventDate == eventEndDate) break;
+                                var continuingEvent;
+                                if (i == 0) {
+                                    continuingEvent = false;
+                                } else {
+                                    continuingEvent = true;
+                                }
+                                DisplayMgr._renderEvent(eventDate, '', '', aEventData, aCalendarId, continuingEvent);
+                            }
+                        }
+                    } else {
+
+                        // 終日イベントでない普通のイベントの場合
+                        if (eventStartDate == eventEndDate) {
+
+                            // 開始日時と終了日時が同じ日
+                            // 一日で収まるイベント
+                            DisplayMgr._renderEvent(eventStartDate, eventStartTime, eventEndTime, aEventData, aCalendarId);
+                        } else {
+                            // 一日で収まらないイベント
+                            for (var i = 0; i < 7; i++) {
+                                var eventDate = DateUtil.getFutureDateStr(eventStartDate, i);
+                                var startTime;
+                                if (i == 0) {
+                                    // 複数日イベントの最初の日
+                                    startTime = eventStartTime;
+                                } else {
+                                    // 複数日イベントの最初の日でない場合、開始時間は0:00とする
+                                    startTime = '0:00';
+                                }
+                                var endTime;
+                                if (eventDate == eventEndDate) {
+                                    // 複数日イベントの最終日の場合
+                                    endTime = eventEndTime;
+                                } else {
+                                    // 複数日イベントの最終日でない場合、終了時間は24:00とする
+                                    endTime = '24:00';
+                                }
+                                // 一連イベントの終了日の終了時間が0:00の場合、その日にはイベントを表示しない
+                                if (eventDate == eventEndDate && endTime == '0:00') {
+                                    break;
+                                }
+
+                                var continuingEvent;
+                                if (i == 0) {
+                                    continuingEvent = false;
+                                } else {
+                                    continuingEvent = true;
+                                }
+
+                                DisplayMgr._renderEvent(eventDate, startTime, endTime, aEventData, aCalendarId, continuingEvent);
+                                if (eventDate == eventEndDate) {
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+
+            /**    
+             * showEventDetail    
+             *    
+             * @param {DOMElement} aDivElement    
+             * @param {Bool} aHideCloseButton    
+             */
+            showEventDetail: function (aDivElement, aHideCloseButton) {
+                if (typeof (aHideCloseButton) == 'undefined') {
+                    aHideCloseButton = false;
+                }
+
+                $('div.sateraito_event_detail').remove();
+                $('div.sateraito_event_summary').css('position', 'static');
+                var participants = $(aDivElement).data('participants');
+                var eventName = $(aDivElement).text();
+                var where = $(aDivElement).attr('where');
+                var description = $(aDivElement).attr('description');
+                var eventId = $(aDivElement).attr('event_id');
+                var isMultipleDayEvent = $(aDivElement).attr('is_multiple_day_event');
+
+                // イベント日は、TDエレメントにある
+                var eventDate = $(aDivElement).parent().parent().parent().attr('event_date');
+
+                // 開始時間、終了時間
+                var startTime = $(aDivElement).parent().attr('start_time');
+                var endTime = $(aDivElement).parent().attr('end_time');
+
+                // イベント詳細パネルのhtml
+                var v_html = DisplayMgr.getEventDetailHtml(aHideCloseButton, participants, eventName, where, description, eventId, eventDate, startTime, endTime, isMultipleDayEvent);
+
+                $(aDivElement).css('position', 'relative');
+                $(aDivElement).append(v_html);
+                var elementTd = $(aDivElement).parent().parent().parent();
+                var elementTr = $(elementTd).parent();
+                var elementTable = $(elementTr).parent();
+                var panelWidth = $(aDivElement).children('div.sateraito_event_detail').width();
+                var tdPositionLeft = $(elementTd).position().left;
+                var rightPositionOfPanel = tdPositionLeft + panelWidth;
+                var tableWidth = $(elementTable).width();
+                var calibration = 20;
+                if ((rightPositionOfPanel + calibration) > tableWidth) {
+                    var myPadding = 40;
+                    var delta = (rightPositionOfPanel - tableWidth + myPadding) * (-1);
+                    $(aDivElement).children('div.sateraito_event_detail').css('left', delta);
+                }
+            }
+        };
+
+    })();
+    
+    
+    Sateraito.MiniMessage = {
+        message: null,
+        fontSize: 12,
+        
+       /**
+		   * initMessageArea
+		   */
+        initMessageArea: function (aFontSize) {
+            var vHtml = '';
+            vHtml += '<div id="mini_message" style="position:absolute; top:0px; left:0px; width:200px; text-align:center; z-index:1000;';
+            vHtml += '"></div>';
+
+            // Add Mini Message Area
+            $('body').append(vHtml);
+            
+            //
+            var bodyWidth = $(window).width();
+            var messageAreaWidth = $('#mini_message').width();
+            $('#mini_message').css('left', '' + ((bodyWidth / 2) - (messageAreaWidth / 2)) + 'px');
+        },
+        
+        
+        /**
+		    * showLoadingMessage
+		    *
+		    * @param {String} aMessageText 琛ㄧず銇欍倠瑾伩杈笺伩涓儭銉冦偦銉笺偢锛堢渷鐣ャ仚銈嬨仺銆併儑銉曘偐銉儓銇銇胯炯銇夸腑銉°儍銈汇兗銈搞倰琛ㄧず锛�
+		    */
+        showLoadingMessage: function (aMessageText) {
+            var prefs = new gadgets.Prefs();
+
+            if (typeof (aMessageText) == 'undefined') {
+                aMessageText = prefs.getMsg('LOADING');
+            }
+
+            Sateraito.MiniMessage.clearMessage();
+
+            // 瑾炯涓儭銉冦偦銉笺偢銈掕〃绀�
+            var msg = new gadgets.MiniMessage(prefs.getModuleId(), $('#mini_message')[0]);
+            Sateraito.MiniMessage.message = msg.createStaticMessage(aMessageText);
+            Sateraito.MiniMessage.message.style.fontSize = '' + Sateraito.MiniMessage.fontSize + 'px';
+        },
+        
+       /**
+		   * clearMessage
+		   *
+		   * 銉°儍銈汇兗銈搞倰娑堝幓銇欍倠
+		   */
+        clearMessage: function () {
+            if (Sateraito.MiniMessage.message != null) {
+                // 銉°儍銈汇兗銈搞倰娑堛仚
+                var prefs = new gadgets.Prefs();
+                var msg = new gadgets.MiniMessage(prefs.getModuleId(), $('#mini_message')[0]);
+                msg.dismissMessage(Sateraito.MiniMessage.message);
+                Sateraito.MiniMessage.message = null;
+            }
+        }
+    };
+    
+    Sateraito.GadgetSetting = {
+
+        settingName: null,
+        settingObj: {},
+        mySiteUrl: null,
+
+        init: function (aSettingName, aMySiteUrl) {
+            Sateraito.GadgetSetting.settingName = aSettingName;
+            Sateraito.GadgetSetting.mySiteUrl = aMySiteUrl;
+        }
+    };
+    
+     Sateraito.GadgetHeight = {
+
+        DEFAULT_GADGET_HEIGHT: 200,        
+        
+        /**
+		     * getUserPrefs
+		     *
+		     * @return {Number} 銈偢銈с儍銉堣ō瀹氥倛銈婅銇裤仩銇椼仧銆屻偓銈搞偋銉冦儓銇珮銇曘€�
+		     */
+        getUserPrefs: function (aDefaultRetVal) {
+            var prefs = new gadgets.Prefs();
+            var gadgetHeight = parseInt(prefs.getString('gadget_height'), 10);
+            if (isNaN(gadgetHeight)) {
+                if (typeof (aDefaultRetVal) == 'undefined') {
+                    gadgetHeight = Sateraito.GadgetHeight.DEFAULT_GADGET_HEIGHT;
+                } else {
+                    gadgetHeight = aDefaultRetVal;
+                }
+            }
+
+            return gadgetHeight;
+        },
+
+        /**
+		     * setGadgetHeight
+		     *
+		     * 銈偢銈с儍銉堛伄楂樸仌銈掑啀瑷畾銇欍倠
+		     */
+        setGadgetHeight: function () {
+            gadgets.window.adjustHeight(Sateraito.GadgetHeight.getUserPrefs());
+        }
+     };
+
+    /**    
+     * エントリーポイント    
+     */
+    gadgets.util.registerOnLoadHandler(function () {
+        // ユーザー別ガジェット設定の初期化
+        Sateraito.GadgetSetting.init('wide_calendar_setting', 'https://sateraito-apps-myportal2.appspot.com');
+        // メッセージの位置を再配置
+        Sateraito.MiniMessage.initMessageArea();
+        // 読込中メッセージを表示
+        Sateraito.MiniMessage.showLoadingMessage();
+        // 本日を表示開始時にセットする
+        DateMgr.setBaseDateToday();
+        // ユーザーチェックをし、OKならデータロード、NGなら認証リンクを表示する
+        //LoginMgr.checkUser();
+        // ガジェットの高さを設定
+        Sateraito.GadgetHeight.setGadgetHeight();
+    });
+     
+    </script>
+
+<div id="output"></div>
+
+
+  ]]>
+  </Content>
+</Module>
